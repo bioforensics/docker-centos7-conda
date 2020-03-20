@@ -11,13 +11,13 @@ RUN yum install -y wget bzip2 git gzip less tar gcc gcc-c++ kernel-devel make wh
 RUN yum install -y epel-release && yum -y update && yum install -y singularity-runtime singularity
 
 # Conda setup
-ADD ./default.condarc /opt/conda/.condarc
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh && \
     /bin/bash Anaconda3-2020.02-Linux-x86_64.sh -b -p /opt/conda && \
     conda init bash && \
     conda update -n base conda && \
     conda create --name ci python=3.7
+ADD ./default.condarc /opt/conda/.condarc
 
 # Build Singularity base image
 ADD ./base.def /opt/singularity/base.def
